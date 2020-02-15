@@ -1,0 +1,19 @@
+Main.py de su route larin olmasini istiyorum
+GET /products - return all products
+POST /products - create new product
+GET /products/232 - returns products with id 232
+PUT /products/232/name - updates name field of the product with id 232
+DELETE /products/231 - delete product with id 231
+GET /products?category=accessories&brand=sony - return products with category Accessories and Brand Sony
+ Engin Bro: Bu islemleri yapabilmek icin once dummy data uretmelisin
+ Engin Bro: Yani soyle, sen bi product listesi tanimlayacaksin kodda. Sonra ornegin ilk route da onun hepsini dondureceksin
+ Engin Bro: Ikinci routte ona yeni eleman ekleyeceksin
+ Engin Bro: Ucuncusunde onu id ye gore filtreleyeceksin
+ Engin Bro: Dorduncusunde id ye gore o listeden sileceksin
+ Engin Bro: Besincisinde filtreleyeceksin
+ (APIs with JSON)
+ Sana tek bi ipuci. Biseyi yapmakta takilirsan onu gec, yapbildigin kisimlardan ilerle
+ Ornegin, json dondurmeyi yapamadin diyr orada durma. Baska seye bak. Json donmeyi versin
+ Ya da delete yapamadim diye kalma orada. Sen yine silmek istedigin urunun id sini al. Sonra onu ekrana yazdir silinmis gibi
+
+https://flask.palletsprojects.com/en/1.1.x/quickstart/#about-responses
