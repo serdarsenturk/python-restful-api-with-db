@@ -13,6 +13,12 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
     return db
 
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args) 
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
+    
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -31,12 +37,6 @@ classProducts = {
     233: Product(233,'C',1002) 
 }
 
-def query_db(query, args=(), one=False):
-    cur = get_db().execute(query, args)
-    rv = cur.fetchall()
-    cur.close()
-    return (rv[0] if rv else None) if one else rv
-    
 @app.route('/products', methods=['GET'])
 def returnAllProducts():
     app.logger.warning("Return all products")
@@ -52,10 +52,11 @@ def returnAllProducts():
 
 @app.route('/products/<int:productId>', methods=['GET'])
 def returnProducts(productId):
-    if not productId in classProducts:
+    product = query_db('select * from products where id = ?', [productId], one=True)
+
+    if product is None:
         return jsonify(), 404
 
-    product = classProducts[productId]
     response = app.response_class(
         response=jsonpickle.encode(product, unpicklable=False),
         status=200,
