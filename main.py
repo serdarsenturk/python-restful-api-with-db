@@ -16,6 +16,7 @@ def get_db():
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args) 
     rv = cur.fetchall()
+    cur.commit()
     cur.close()
     return (rv[0] if rv else None) if one else rv
     
@@ -76,10 +77,10 @@ def createNewProduct():
 
 @app.route('/products/<int:productId>', methods = ['DELETE'])
 def deleteProduct(productId):
-    if not productId in classProducts: 
+    query_db('delete from products where id = ?', [productId], one=True)
+    if productId is None: 
         return jsonify(), 404
 
-    del classProducts[productId]
     return jsonify(), 204
 
 @app.route('/products/<int:productId>', methods = ['PUT'])
